@@ -1,23 +1,23 @@
 const priorities = [
   {
-    id: 1,
-    title: "High",
-    color: "#CE3853",
+    id: "none",
+    title: "None",
+    color: "hsl(var(--muted))",
   },
   {
-    id: 2,
-    title: "Medium",
-    color: "#D0BA69",
-  },
-  {
-    id: 3,
+    id: "low",
     title: "Low",
     color: "#6AD34F",
   },
   {
-    id: 4,
-    title: "None",
-    color: "hsl(var(--muted))",
+    id: "medium",
+    title: "Medium",
+    color: "#D0BA69",
+  },
+  {
+    id: "high",
+    title: "High",
+    color: "#CE3853",
   },
 ]
 

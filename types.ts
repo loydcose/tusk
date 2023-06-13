@@ -12,7 +12,7 @@ export type Board = {
 }
 
 export type Priority = {
-  id: number
+  id: string
   title: string
   color: string
 }

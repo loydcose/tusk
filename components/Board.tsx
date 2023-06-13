@@ -25,7 +25,10 @@ export default function Board({ board }: PropTypes) {
       </div>
       <div className="flex flex-col gap-3">
         {board.tasks.map((task) => (
-          <div key={task.id} className="border border-input rounded-lg">
+          <div
+            key={task.id}
+            className="border border-input rounded-lg cursor-grab hover:bg-muted/[.35] transition-colors"
+          >
             {!task.isEditing ? (
               <Task task={task} />
             ) : (

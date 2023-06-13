@@ -7,7 +7,7 @@ const boards = [
         id: 1,
         isEditing: false,
         title: "Cook meal",
-        priority: "high",
+        priority: "wew",
       },
       {
         id: 2,

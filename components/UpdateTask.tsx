@@ -16,25 +16,29 @@ import priorityColor from "@/lib/priorityColor"
 import priorities from "@/app/data/priorities"
 import { useState } from "react"
 import { Priority, Task } from "@/types"
+import { updateTask } from "@/redux/features/boardsSlice"
+import { useAppDispatch } from "@/redux/hooks"
 
 type PropTypes = {
   task: Task
 }
 
 export default function UpdateTask({ task }: PropTypes) {
+  const dispatch = useAppDispatch()
   const [open, setOpen] = useState(false)
   const [selectedPriority, setSelectedPriority] = useState<Priority | null>(
     null
   )
 
-  const handleSelect = (title: string) => {
+  const handleSelect = (id: string) => {
     const priority =
       priorities.find((priority) => {
-        return priority.title.toLowerCase() === title.toLowerCase()
+        return priority.id === id
       }) || null
 
     setSelectedPriority(priority)
     setOpen(false)
+    dispatch(updateTask())
   }
 
   return (
@@ -58,7 +62,7 @@ export default function UpdateTask({ task }: PropTypes) {
                 <>
                   <div
                     style={{
-                      backgroundColor: priorityColor(selectedPriority.title),
+                      backgroundColor: priorityColor(selectedPriority.id),
                     }}
                     className="h-3 w-3 rounded-full"
                   ></div>
@@ -81,7 +85,7 @@ export default function UpdateTask({ task }: PropTypes) {
                     >
                       <div
                         style={{
-                          backgroundColor: priorityColor(priority.title),
+                          backgroundColor: priorityColor(priority.id),
                         }}
                         className="h-3 w-3 rounded-full"
                       ></div>
