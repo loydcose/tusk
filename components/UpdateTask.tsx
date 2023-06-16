@@ -20,10 +20,9 @@ import {
 
 type PropTypes = {
   task: Task
-  board: Board
 }
 
-export default function UpdateTask({ board, task }: PropTypes) {
+export default function UpdateTask({ task }: PropTypes) {
   const [open, setOpen] = useState(false)
   const [title, setTitle] = useState(task?.title)
   const [selectedPriority, setSelectedPriority] = useState<Priority>(
@@ -39,12 +38,7 @@ export default function UpdateTask({ board, task }: PropTypes) {
   }
 
   return (
-    <HandleBlur
-      board={board}
-      task={task}
-      selectedPriority={selectedPriority}
-      title={title}
-    >
+    <HandleBlur task={task} selectedPriority={selectedPriority} title={title}>
       <div>
         <Label htmlFor="title">Title</Label>
         <Input

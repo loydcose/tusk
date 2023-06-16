@@ -9,24 +9,25 @@ import { Edit, Trash } from "lucide-react"
 import { Button } from "./ui/button"
 import { Board, Task } from "@/types"
 import { useAppDispatch } from "@/redux/hooks"
-import { deleteTask, setTaskEditing } from "@/redux/features/boards/boardSlice"
+import {
+  deleteTask,
+  updateTask,
+} from "@/redux/features/boards/kanbanSlice"
 import PriorityCircle from "./PriorityCircle"
 import { useToast } from "./ui/use-toast"
 import { ToastAction } from "./ui/toast"
 
 type PropTypes = {
-  board: Board
   task: Task
 }
 
-export default function Task({ board, task }: PropTypes) {
+export default function Task({ task }: PropTypes) {
   const dispatch = useAppDispatch()
   const { toast } = useToast()
 
-  const handleClick = () => {
+  const handleDropdown = () => {
     dispatch(
-      setTaskEditing({
-        boardId: board.id,
+      updateTask({
         taskId: task.id,
         isEditing: true,
       })
@@ -34,7 +35,7 @@ export default function Task({ board, task }: PropTypes) {
   }
 
   const handleDelete = () => {
-    dispatch(deleteTask({ boardId: board.id, taskId: task.id }))
+    dispatch(deleteTask({ taskId: task.id }))
     toast({
       title: "Task Deleted",
       description: task.title,
@@ -61,7 +62,7 @@ export default function Task({ board, task }: PropTypes) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-32">
-          <DropdownMenuItem onClick={handleClick}>
+          <DropdownMenuItem onClick={handleDropdown}>
             <Edit className="mr-2 h-4 w-4" />
             <span>Edit</span>
           </DropdownMenuItem>

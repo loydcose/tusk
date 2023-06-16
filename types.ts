@@ -1,5 +1,6 @@
 export type Task = {
   id: number
+  boardId: number,
   isEditing: boolean
   title: string
   priority: string
@@ -18,7 +19,8 @@ export type Priority = {
 }
 
 export type State = {
-  value: Board[]
+  boards: Board[],
+  tasks: Task[]
 }
 
 export type Action = {

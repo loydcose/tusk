@@ -1,15 +1,16 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import Task from "./Task"
 import UpdateTask from "./UpdateTask"
-import { Board } from "@/types"
+import { Board, Task as TaskType } from "@/types"
+import Task from "./Task"
 
 type PropTypes = {
   board: Board
+  tasks: TaskType[]
 }
 
-export default function Board({ board }: PropTypes) {
+export default function Board({ board, tasks }: PropTypes) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
@@ -20,19 +21,19 @@ export default function Board({ board }: PropTypes) {
           variant="secondary"
           className="text-muted-foreground w-6 h-6 flex items-center justify-center"
         >
-          {board.tasks.length}
+          {tasks.length}
         </Badge>
       </div>
       <div className="flex flex-col gap-3">
-        {board.tasks.map((task) => (
+        {tasks.map((task) => (
           <div
             key={task.id}
             className="border border-input rounded-lg cursor-grab hover:bg-muted/[.35] transition-colors"
           >
             {!task.isEditing ? (
-              <Task board={board} task={task} />
+              <Task task={task} />
             ) : (
-              <UpdateTask board={board} task={task} />
+              <UpdateTask task={task} />
             )}
           </div>
         ))}

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit"
-import boardsSlice from "./features/boards/boardSlice"
+import kanbanSlice from "./features/boards/kanbanSlice"
 
 export const store = configureStore({
   reducer: {
-    boards: boardsSlice,
+    kanban: kanbanSlice,
   },
 })
 
