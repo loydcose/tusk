@@ -30,9 +30,9 @@ export default function Board({ board }: PropTypes) {
             className="border border-input rounded-lg cursor-grab hover:bg-muted/[.35] transition-colors"
           >
             {!task.isEditing ? (
-              <Task task={task} />
+              <Task board={board} task={task} />
             ) : (
-              <UpdateTask task={task} />
+              <UpdateTask board={board} task={task} />
             )}
           </div>
         ))}

@@ -6,34 +6,54 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Edit, Trash } from "lucide-react"
-import priorityColor from "@/lib/priorityColor"
 import { Button } from "./ui/button"
-import { Task } from "@/types"
-import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import {
-  deleteTask,
-  selectBoards,
-  setTaskEditing,
-} from "@/redux/features/boardsSlice"
+import { Board, Task } from "@/types"
+import { useAppDispatch } from "@/redux/hooks"
+import { deleteTask, setTaskEditing } from "@/redux/features/boards/boardSlice"
+import PriorityCircle from "./PriorityCircle"
+import { useToast } from "./ui/use-toast"
+import { ToastAction } from "./ui/toast"
 
 type PropTypes = {
+  board: Board
   task: Task
 }
 
-export default function Task({ task }: PropTypes) {
-  const boards = useAppSelector(selectBoards)
+export default function Task({ board, task }: PropTypes) {
   const dispatch = useAppDispatch()
+  const { toast } = useToast()
+
+  const handleClick = () => {
+    dispatch(
+      setTaskEditing({
+        boardId: board.id,
+        taskId: task.id,
+        isEditing: true,
+      })
+    )
+  }
+
+  const handleDelete = () => {
+    dispatch(deleteTask({ boardId: board.id, taskId: task.id }))
+    toast({
+      title: "Task Deleted",
+      description: task.title,
+      action: (
+        <ToastAction onClick={handleUndo} altText="Undo">
+          Undo
+        </ToastAction>
+      ),
+    })
+  }
+
+  const handleUndo = () => {
+    console.log("undo deleted file!")
+  }
 
   return (
     <div className="flex gap-2 py-2 pr-2 pl-3">
-      <div
-        style={{
-          backgroundColor: priorityColor(task?.priority),
-        }}
-        className="h-3 w-3 rounded-full shrink-0 mt-3"
-      ></div>
+      <PriorityCircle color={task.priority} className="mt-3" />
       <p className="mt-[6px]">{task?.title}</p>
-
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button size="sm" variant="ghost" className="ml-auto">
@@ -41,11 +61,11 @@ export default function Task({ task }: PropTypes) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-32">
-          <DropdownMenuItem onClick={() => dispatch(setTaskEditing())}>
+          <DropdownMenuItem onClick={handleClick}>
             <Edit className="mr-2 h-4 w-4" />
             <span>Edit</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => dispatch(deleteTask())}>
+          <DropdownMenuItem onClick={handleDelete}>
             <Trash className="mr-2 h-4 w-4" />
             <span>Delete</span>
           </DropdownMenuItem>

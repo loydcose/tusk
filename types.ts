@@ -2,7 +2,7 @@ export type Task = {
   id: number
   isEditing: boolean
   title: string
-  priority: "high" | "medium" | "low" | "none"
+  priority: string
 }
 
 export type Board = {
@@ -15,4 +15,12 @@ export type Priority = {
   id: string
   title: string
   color: string
+}
+
+export type State = {
+  value: Board[]
+}
+
+export type Action = {
+  payload: any
 }

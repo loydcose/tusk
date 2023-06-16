@@ -1,6 +1,11 @@
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "./ui/button"
+import priorities from "@/app/data/priorities"
+import { useRef, useState } from "react"
+import { Board, Priority, Task } from "@/types"
+import PriorityCircle from "./PriorityCircle"
+import HandleBlur from "./layouts/HandleBlur"
 import {
   Command,
   CommandGroup,
@@ -12,40 +17,43 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import priorityColor from "@/lib/priorityColor"
-import priorities from "@/app/data/priorities"
-import { useState } from "react"
-import { Priority, Task } from "@/types"
-import { updateTask } from "@/redux/features/boardsSlice"
-import { useAppDispatch } from "@/redux/hooks"
 
 type PropTypes = {
   task: Task
+  board: Board
 }
 
-export default function UpdateTask({ task }: PropTypes) {
-  const dispatch = useAppDispatch()
+export default function UpdateTask({ board, task }: PropTypes) {
   const [open, setOpen] = useState(false)
-  const [selectedPriority, setSelectedPriority] = useState<Priority | null>(
-    null
-  )
+  const [title, setTitle] = useState(task?.title)
+  const [selectedPriority, setSelectedPriority] = useState<Priority>(
+    priorities.find((priority) => priority.id === task.priority)!
+  )!
 
   const handleSelect = (id: string) => {
-    const priority =
-      priorities.find((priority) => {
-        return priority.id === id
-      }) || null
-
-    setSelectedPriority(priority)
+    const priority = priorities.find((priority) => {
+      return priority.id === id
+    })
+    setSelectedPriority(priority!)
     setOpen(false)
-    dispatch(updateTask())
   }
 
   return (
-    <div className="p-3">
+    <HandleBlur
+      board={board}
+      task={task}
+      selectedPriority={selectedPriority}
+      title={title}
+    >
       <div>
         <Label htmlFor="title">Title</Label>
-        <Input value={task?.title} type="text" id="title" placeholder="Title" />
+        <Input
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          type="text"
+          id="title"
+          placeholder="Title"
+        />
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="title" className="mt-4">
@@ -58,22 +66,11 @@ export default function UpdateTask({ task }: PropTypes) {
               size="sm"
               className="w-[150px] justify-start flex items-center gap-3"
             >
-              {selectedPriority ? (
-                <>
-                  <div
-                    style={{
-                      backgroundColor: priorityColor(selectedPriority.id),
-                    }}
-                    className="h-3 w-3 rounded-full"
-                  ></div>
-                  <span>{selectedPriority.title}</span>
-                </>
-              ) : (
-                <>Select priority</>
-              )}
+              <PriorityCircle color={selectedPriority.id} />
+              <span>{selectedPriority.title}</span>
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="p-0" side="right" align="start">
+          <PopoverContent className="p-0 w-32" side="right" align="start">
             <Command>
               <CommandList>
                 <CommandGroup>
@@ -83,12 +80,7 @@ export default function UpdateTask({ task }: PropTypes) {
                       onSelect={handleSelect}
                       className="flex items-center gap-3"
                     >
-                      <div
-                        style={{
-                          backgroundColor: priorityColor(priority.id),
-                        }}
-                        className="h-3 w-3 rounded-full"
-                      ></div>
+                      <PriorityCircle color={priority.id} />
                       <span>{priority.title}</span>
                     </CommandItem>
                   ))}
@@ -98,6 +90,6 @@ export default function UpdateTask({ task }: PropTypes) {
           </PopoverContent>
         </Popover>
       </div>
-    </div>
+    </HandleBlur>
   )
 }

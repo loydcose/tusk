@@ -2,9 +2,12 @@
 
 import Navbar from "@/components/Navbar"
 import Board from "@/components/Board"
-import boards from "./data/boards"
+import { useAppSelector } from "@/redux/hooks"
+import { selectBoards } from "@/redux/features/boards/boardSlice"
 
 export default function Home() {
+  const boards = useAppSelector(selectBoards)
+
   return (
     <main className="flex">
       <section className="mx-auto mt-20 w-[90%] max-w-[900px]">

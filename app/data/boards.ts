@@ -7,7 +7,7 @@ const boards = [
         id: 1,
         isEditing: false,
         title: "Cook meal",
-        priority: "wew",
+        priority: "high",
       },
       {
         id: 2,
@@ -29,7 +29,7 @@ const boards = [
     tasks: [
       {
         id: 3,
-        isEditing: true,
+        isEditing: false,
         title: "Cook meal",
         priority: "high",
       },
@@ -53,7 +53,7 @@ const boards = [
       },
       {
         id: 6,
-        isEditing: true,
+        isEditing: false,
         title: "Post content on facebook and instagram",
         priority: "low",
       },
