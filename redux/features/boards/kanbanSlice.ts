@@ -15,6 +15,20 @@ export const kanbanSlice = createSlice({
       console.log("move a task")
     },
 
+    addTasks: (state, action) => {
+      const { boardId } = action.payload
+
+      const emptyTask = {
+        id: Date.now(),
+        boardId,
+        title: "Task",
+        isEditing: true,
+        priority: "none",
+      }
+
+      state.tasks = [...state.tasks, emptyTask]
+    },
+
     deleteTask: (state, action) => {
       const { taskId } = action.payload
       state.tasks = state.tasks.filter((task) => task.id !== taskId)
@@ -33,7 +47,8 @@ export const kanbanSlice = createSlice({
   },
 })
 
-export const { reset, moveTask, deleteTask, updateTask } = kanbanSlice.actions
+export const { reset, moveTask, deleteTask, updateTask, addTasks } =
+  kanbanSlice.actions
 export const selectKanban = (state: any) => state.kanban
 
 export default kanbanSlice.reducer

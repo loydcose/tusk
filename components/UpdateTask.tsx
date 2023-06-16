@@ -2,7 +2,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "./ui/button"
 import priorities from "@/app/data/priorities"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Board, Priority, Task } from "@/types"
 import PriorityCircle from "./PriorityCircle"
 import HandleBlur from "./layouts/HandleBlur"
@@ -28,6 +28,7 @@ export default function UpdateTask({ task }: PropTypes) {
   const [selectedPriority, setSelectedPriority] = useState<Priority>(
     priorities.find((priority) => priority.id === task.priority)!
   )!
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSelect = (id: string) => {
     const priority = priorities.find((priority) => {
@@ -37,6 +38,12 @@ export default function UpdateTask({ task }: PropTypes) {
     setOpen(false)
   }
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.select()
+    }
+  }, [])
+
   return (
     <HandleBlur task={task} selectedPriority={selectedPriority} title={title}>
       <div>
@@ -44,6 +51,7 @@ export default function UpdateTask({ task }: PropTypes) {
         <Input
           onChange={(e) => setTitle(e.target.value)}
           value={title}
+          ref={inputRef}
           type="text"
           id="title"
           placeholder="Title"

@@ -4,6 +4,8 @@ import { Plus } from "lucide-react"
 import UpdateTask from "./UpdateTask"
 import { Board, Task as TaskType } from "@/types"
 import Task from "./Task"
+import { addTasks } from "@/redux/features/boards/kanbanSlice"
+import { useAppDispatch } from "@/redux/hooks"
 
 type PropTypes = {
   board: Board
@@ -11,6 +13,12 @@ type PropTypes = {
 }
 
 export default function Board({ board, tasks }: PropTypes) {
+  const dispatch = useAppDispatch()
+
+  const handleAddTask = () => {
+    dispatch(addTasks({ boardId: board.id }))
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
@@ -39,6 +47,7 @@ export default function Board({ board, tasks }: PropTypes) {
         ))}
       </div>
       <Button
+        onClick={handleAddTask}
         variant="ghost"
         className="flex items-center justify-start gap-2 w-full text-ring"
       >
