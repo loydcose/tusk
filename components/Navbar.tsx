@@ -3,7 +3,7 @@ import { Switch } from "@/components/ui/switch"
 import { useEffect, useState } from "react"
 
 export default function Navbar() {
-  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
     const { documentElement } = document

@@ -1,21 +1,31 @@
-import { MoreVertical } from "lucide-react"
+import {
+  ArrowLeftRight,
+  Mail,
+  MessageSquare,
+  MoreVertical,
+  PlusCircle,
+  UserPlus,
+} from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Edit, Trash } from "lucide-react"
 import { Button } from "./ui/button"
 import { Board, Task } from "@/types"
 import { useAppDispatch } from "@/redux/hooks"
-import {
-  deleteTask,
-  updateTask,
-} from "@/redux/features/boards/kanbanSlice"
+import { deleteTask, updateTask } from "@/redux/features/boards/kanbanSlice"
 import PriorityCircle from "./PriorityCircle"
 import { useToast } from "./ui/use-toast"
 import { ToastAction } from "./ui/toast"
+import { boards } from "@/app/data/data"
 
 type PropTypes = {
   task: Task
@@ -47,6 +57,10 @@ export default function Task({ task }: PropTypes) {
     })
   }
 
+  const handleMove = (boardId: number) => {
+    dispatch(updateTask({ taskId: task.id, boardId }))
+  }
+
   const handleUndo = () => {
     console.log("undo deleted file!")
   }
@@ -61,7 +75,25 @@ export default function Task({ task }: PropTypes) {
             <MoreVertical className="w-5 h-5 text-mute-foreground" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-32">
+        <DropdownMenuContent className="w-36">
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <ArrowLeftRight className="mr-2 h-4 w-4" />
+              <span>Move to</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                {boards.map((board) => (
+                  <DropdownMenuItem
+                    onClick={() => handleMove(board.id)}
+                    key={board.id}
+                  >
+                    <span>{board.title}</span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
           <DropdownMenuItem onClick={handleDropdown}>
             <Edit className="mr-2 h-4 w-4" />
             <span>Edit</span>
