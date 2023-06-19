@@ -22,7 +22,7 @@ type PropTypes = {
   task: Task
 }
 
-export default function UpdateTask({ task }: PropTypes) {
+export default function TaskForm({ task }: PropTypes) {
   const [open, setOpen] = useState(false)
   const [title, setTitle] = useState(task?.title)
   const [selectedPriority, setSelectedPriority] = useState<Priority>(

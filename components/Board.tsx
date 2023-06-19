@@ -1,11 +1,10 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import UpdateTask from "./UpdateTask"
 import { Board, Task as TaskType } from "@/types"
-import Task from "./Task"
 import { addTasks } from "@/redux/features/boards/kanbanSlice"
 import { useAppDispatch } from "@/redux/hooks"
+import Task from "./Task"
 
 type PropTypes = {
   board: Board
@@ -34,16 +33,7 @@ export default function Board({ board, tasks }: PropTypes) {
       </div>
       <div className="flex flex-col gap-3">
         {tasks.map((task) => (
-          <div
-            key={task.id}
-            className="border border-input rounded-lg cursor-grab hover:bg-muted/[.35] transition-colors"
-          >
-            {!task.isEditing ? (
-              <Task task={task} />
-            ) : (
-              <UpdateTask task={task} />
-            )}
-          </div>
+          <Task key={task.id} task={task} />
         ))}
       </div>
       <Button
