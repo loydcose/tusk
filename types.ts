@@ -9,7 +9,6 @@ export type Task = {
 export type Board = {
   id: number
   title: string
-  tasks: Task[]
 }
 
 export type Priority = {
@@ -17,6 +16,8 @@ export type Priority = {
   title: string
   color: string
 }
+
+export type Theme = "light" | "dark"
 
 export type State = {
   boards: Board[],
