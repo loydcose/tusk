@@ -38,7 +38,7 @@ export default function TaskList({ task, setHidden }: PropTypes) {
         <DropdownMenuContent className="w-36">
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-              <ArrowLeftRight className="mr-2 h-4 w-4" />
+              <ArrowLeftRight className="mr-2 h-4 w-4 opacity-50" />
               <span>Move to</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
@@ -55,11 +55,11 @@ export default function TaskList({ task, setHidden }: PropTypes) {
             </DropdownMenuPortal>
           </DropdownMenuSub>
           <DropdownMenuItem onClick={handleDropdown}>
-            <Edit className="mr-2 h-4 w-4" />
+            <Edit className="mr-2 h-4 w-4 opacity-50" />
             <span>Edit</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleDelete}>
-            <Trash className="mr-2 h-4 w-4" />
+            <Trash className="mr-2 h-4 w-4 opacity-50" />
             <span>Delete</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

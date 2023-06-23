@@ -20,14 +20,14 @@ export default function Navbar() {
   return (
     <>
       <nav>
-        <h1 className="flex items-center gap-3 mb-2">
+        <h1 className="flex items-center gap-2 mb-2">
           <Logo isDarkMode={isDarkMode} />
           <span className="text-2xl font-semibold">Tusk</span>
         </h1>
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
           <p className="text-muted-foreground">Your minimalist task manager.</p>
           <div className="flex gap-3 items-center">
-            Dark Mode
+            <span className="text-muted-foreground">Dark Mode</span>
             <Switch
               onCheckedChange={() => setIsDarkMode((prev) => !prev)}
               checked={isDarkMode}

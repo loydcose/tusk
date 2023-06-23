@@ -1,8 +1,12 @@
-export default function Logo({ isDarkMode }) {
+type PropTypes = {
+  isDarkMode: boolean
+}
+
+export default function Logo({ isDarkMode }: PropTypes) {
   return (
     <svg
-      width="37"
-      height="37"
+      width="32"
+      height="32"
       viewBox="0 0 37 37"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

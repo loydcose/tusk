@@ -24,12 +24,14 @@ export default function Board({ board, tasks }: PropTypes) {
         <h2 className="font-semibold text-sm text-muted-foreground">
           {board.title}
         </h2>
-        <Badge
-          variant="secondary"
-          className="text-muted-foreground w-6 h-6 flex items-center justify-center"
-        >
-          {tasks.length}
-        </Badge>
+        {tasks.length > 0 && (
+          <Badge
+            variant="secondary"
+            className="text-muted-foreground w-6 h-6 flex items-center justify-center"
+          >
+            {tasks.length}
+          </Badge>
+        )}
       </div>
       <div className="flex flex-col gap-3">
         {tasks.map((task) => (

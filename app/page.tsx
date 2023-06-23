@@ -10,10 +10,10 @@ export default function Home() {
   const kanban = useAppSelector(selectKanban)
 
   return (
-    <main className="flex">
-      <section className="mx-auto mt-20 w-[90%] max-w-[900px]">
+    <main className="min-h-screen py-10 md:py-20">
+      <section className="mx-auto w-[90%] max-w-[900px]">
         <Navbar />
-        <article className="grid grid-cols-3 gap-8">
+        <article className="grid md:grid-cols-3 gap-8">
           {kanban.boards.map((board: BoardType) => {
             const boardTasks = kanban.tasks.filter((task: Task) => {
               return board.id === task.boardId

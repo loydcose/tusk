@@ -2,7 +2,7 @@ const priorities = [
   {
     id: "none",
     title: "None",
-    color: "hsl(var(--muted))",
+    color: "hsl(var(--input))",
   },
   {
     id: "low",
