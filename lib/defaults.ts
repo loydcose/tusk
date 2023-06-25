@@ -1,5 +1,7 @@
 import { Board, Task, Theme } from "@/types"
 
+export const storageName = "kanban"
+
 const theme: Theme = "light"
 const tasks: Task[] = []
 const boards: Board[] = [

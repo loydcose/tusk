@@ -1,4 +1,4 @@
-import { FocusEventHandler, ReactNode, Ref, useEffect, useRef } from "react"
+import { FocusEventHandler, ReactNode, useEffect, useRef } from "react"
 import { updateTask } from "@/redux/features/boards/kanbanSlice"
 import { useAppDispatch } from "@/redux/hooks"
 import { Priority, Task } from "@/types"
@@ -21,7 +21,6 @@ export default function HandleBlur({
   const hasChanges =
     task.title !== title || task.priority !== selectedPriority.id
 
-
   const handleBlur: FocusEventHandler<HTMLDivElement> = (e) => {
     const target = e.relatedTarget
     const parent = e.currentTarget
@@ -34,7 +33,7 @@ export default function HandleBlur({
           title: title.trim(),
           taskId: task.id,
           priority: selectedPriority.id,
-          isEditing: false
+          isEditing: false,
         })
       )
     } else {
@@ -42,13 +41,11 @@ export default function HandleBlur({
     }
   }
 
-
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.focus()
     }
   }, [])
-  
 
   return (
     <div

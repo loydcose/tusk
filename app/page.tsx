@@ -2,12 +2,23 @@
 
 import Navbar from "@/components/Navbar"
 import Board from "@/components/Board"
-import { useAppSelector } from "@/redux/hooks"
-import { selectKanban } from "@/redux/features/boards/kanbanSlice"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { selectKanban, setState } from "@/redux/features/boards/kanbanSlice"
 import { Board as BoardType, Task } from "@/types"
+import { useEffect } from "react"
+import { storageName } from "@/lib/defaults"
 
 export default function Home() {
   const kanban = useAppSelector(selectKanban)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    // ensuring the window object has defined before accessing local storage
+    const storage = localStorage.getItem(storageName)
+    if (storage) {
+      dispatch(setState(JSON.parse(storage)))
+    }
+  }, [])
 
   return (
     <main className="min-h-screen py-10 md:py-20">
