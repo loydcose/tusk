@@ -28,11 +28,40 @@ export const kanbanSlice = createSlice({
       setStorage(state.value)
     },
 
-    moveTask: (state) => {
-      console.log("move a task")
-      setStorage(state.value)
+    moveTask: (state, action) => {
+      const { result } = action.payload
+      const { draggableId, destination } = result
+      if (!destination) return
+
+      const restTasks = []
+      const destinationTasks = []
+      let removedTask: Task | null = null
+
+      // splitting tasks
+      for (const task of state.value.tasks) {
+        if (
+          task.boardId === parseInt(destination.droppableId) &&
+          task.id !== parseInt(draggableId)
+        ) {
+          destinationTasks.push(task)
+        } else {
+          if (task.id === parseInt(draggableId)) {
+            removedTask = {
+              ...task,
+              boardId: parseInt(destination.droppableId),
+            }
+          } else {
+            restTasks.push(task)
+          }
+        }
+      }
+
+      // replacing and combining tasks
+      destinationTasks.splice(destination.index, 0, removedTask!)
+      state.value.tasks = [...restTasks, ...destinationTasks]
+      setStorage(state.value);
     },
-    
+
     addTasks: (state, action) => {
       const { boardId } = action.payload
 
