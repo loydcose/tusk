@@ -12,6 +12,7 @@ import { Board as BoardType, Task } from "@/types"
 import { useEffect } from "react"
 import { storageName } from "@/lib/defaults"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
+import SortButton from "@/components/SortButton"
 
 export default function Home() {
   const kanban = useAppSelector(selectKanban)
@@ -29,6 +30,7 @@ export default function Home() {
     <main className="min-h-screen py-10 md:py-20">
       <section className="mx-auto w-[90%] max-w-[900px]">
         <Navbar />
+        <SortButton />
         <DragDropContext onDragEnd={(result) => dispatch(moveTask({ result }))}>
           <article className="grid md:grid-cols-3 gap-8">
             {kanban.boards.map((board: BoardType) => {

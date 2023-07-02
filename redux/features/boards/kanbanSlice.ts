@@ -2,6 +2,7 @@ import setStorage from "@/lib/setStorage"
 import defaults from "@/lib/defaults"
 import { Task } from "@/types"
 import { createSlice, current } from "@reduxjs/toolkit"
+import priorities from "@/app/data/priorities"
 
 const initialState = {
   value: defaults,
@@ -59,7 +60,7 @@ export const kanbanSlice = createSlice({
       // replacing and combining tasks
       destinationTasks.splice(destination.index, 0, removedTask!)
       state.value.tasks = [...restTasks, ...destinationTasks]
-      setStorage(state.value);
+      setStorage(state.value)
     },
 
     addTasks: (state, action) => {
@@ -71,6 +72,7 @@ export const kanbanSlice = createSlice({
         title: "Task",
         isEditing: true,
         priority: "none",
+        updatedAt: new Date(),
       }
 
       state.value.tasks = [...state.value.tasks, emptyTask]
@@ -96,6 +98,36 @@ export const kanbanSlice = createSlice({
       })
       setStorage(state.value)
     },
+
+    sortTasks: (state, action) => {
+      const { sort, order } = action.payload
+      const { tasks } = state.value
+      if (!sort) return
+
+      let sortedTasks
+
+      switch (sort) {
+        case "name":
+          sortedTasks = tasks.sort((a, b) => a.title.localeCompare(b.title))
+          break
+        case "dateModified":
+          sortedTasks = tasks.sort(
+            (a, b) => a.updatedAt.getTime() - b.updatedAt.getTime()
+          )
+          break
+        case "priority":
+          sortedTasks = tasks.sort((a, b) => {
+            const prioIds = priorities.map((priority) => priority.id)
+            return prioIds.indexOf(a.priority) - prioIds.indexOf(b.priority)
+          })
+          break
+        default:
+          return
+      }
+      if (order === "desc") sortedTasks.reverse()
+      state.value.tasks = sortedTasks
+      setStorage(state.value)
+    },
   },
 })
 
@@ -107,6 +139,7 @@ export const {
   addTasks,
   setState,
   setTheme,
+  sortTasks,
 } = kanbanSlice.actions
 export const selectKanban = (state: any) => state.kanban.value
 

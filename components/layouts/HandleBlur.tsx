@@ -34,6 +34,7 @@ export default function HandleBlur({
           taskId: task.id,
           priority: selectedPriority.id,
           isEditing: false,
+          updatedAt: new Date()
         })
       )
     } else {

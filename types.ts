@@ -4,6 +4,7 @@ export type Task = {
   isEditing: boolean
   title: string
   priority: string
+  updatedAt: Date
 }
 
 export type Board = {
