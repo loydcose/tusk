@@ -2,6 +2,10 @@
 
 A minimalist project manager inspired by Trello, designed to help you organize your tasks efficiently.
 
+## Homepage Preview
+
+![Homepage Preview](https://i.ibb.co/KWVs2CR/Screenshot-2023-07-03-023714.png)
+
 ## Features
 
 - Kanban board interface for task organization
