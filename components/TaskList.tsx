@@ -28,7 +28,7 @@ export default function TaskList({ task, setHidden }: PropTypes) {
   return (
     <div className="flex gap-2 py-2 pr-2 pl-3">
       <PriorityCircle color={task.priority} className="mt-3" />
-      <p className="mt-[6px]">{task?.title}</p>
+      <p className="mt-[6px] overflow-ellipsis">{task?.title}</p>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button size="sm" variant="ghost" className="ml-auto">

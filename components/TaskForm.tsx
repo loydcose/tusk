@@ -52,6 +52,7 @@ export default function TaskForm({ task }: PropTypes) {
           onChange={(e) => setTitle(e.target.value)}
           value={title}
           ref={inputRef}
+          maxLength={128}
           type="text"
           id="title"
           placeholder="Title"

@@ -30,11 +30,11 @@ export default function HandleBlur({
     if (hasChanges) {
       dispatch(
         updateTask({
-          title: title.trim(),
+          title: title.trim() ? title.trim() : "Untitled",
           taskId: task.id,
           priority: selectedPriority.id,
           isEditing: false,
-          updatedAt: new Date()
+          updatedAt: new Date(),
         })
       )
     } else {
