@@ -18,8 +18,7 @@ export type Priority = {
   color: string
 }
 
-export type Theme = "light" | "dark"
-
+export type Theme = "light" | "dark" | "system"
 export type State = {
   boards: Board[],
   tasks: Task[]
