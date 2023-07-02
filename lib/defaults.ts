@@ -7,7 +7,7 @@ const tasks: Task[] = []
 const boards: Board[] = [
   {
     id: 1,
-    title: "Not Started",
+    title: "To-do",
   },
   {
     id: 2,
