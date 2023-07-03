@@ -111,9 +111,11 @@ export const kanbanSlice = createSlice({
           sortedTasks = tasks.sort((a, b) => a.title.localeCompare(b.title))
           break
         case "dateModified":
-          sortedTasks = tasks.sort(
-            (a, b) => a.updatedAt.getTime() - b.updatedAt.getTime()
-          )
+          sortedTasks = tasks.sort((a, b) => {
+            return (
+              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+            )
+          })
           break
         case "priority":
           sortedTasks = tasks.sort((a, b) => {
