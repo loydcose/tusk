@@ -113,7 +113,7 @@ export const kanbanSlice = createSlice({
         case "dateModified":
           sortedTasks = tasks.sort((a, b) => {
             return (
-              new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+              new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
             )
           })
           break
