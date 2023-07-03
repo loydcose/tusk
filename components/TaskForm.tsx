@@ -2,10 +2,9 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "./ui/button"
 import priorities from "@/app/data/priorities"
-import { useEffect, useRef, useState } from "react"
-import { Board, Priority, Task } from "@/types"
+import { useRef, useState } from "react"
+import { Task } from "@/types"
 import PriorityCircle from "./PriorityCircle"
-import HandleBlur from "./layouts/HandleBlur"
 import {
   Command,
   CommandGroup,
@@ -17,6 +16,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import useTaskForm from "@/app/hooks/useTaskForm"
+import usePrioritySelection from "@/app/hooks/usePrioritySelection"
 
 type PropTypes = {
   task: Task
@@ -24,31 +25,32 @@ type PropTypes = {
 
 export default function TaskForm({ task }: PropTypes) {
   const [open, setOpen] = useState(false)
-  const [title, setTitle] = useState(task?.title)
-  const [selectedPriority, setSelectedPriority] = useState<Priority>(
-    priorities.find((priority) => priority.id === task.priority)!
-  )!
+  const [title, setTitle] = useState(task.title)
   const inputRef = useRef<HTMLInputElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const handleSelect = (id: string) => {
-    const priority = priorities.find((priority) => {
-      return priority.id === id
-    })
-    setSelectedPriority(priority!)
-    setOpen(false)
-  }
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.select()
-    }
-  }, [])
+  const { selectedPriority, handleSelect } = usePrioritySelection({
+    task,
+    setOpen,
+  })
+  const { closeForm, handleOnBlur, handleKeyDown } = useTaskForm({
+    task,
+    title,
+    selectedPriority,
+    inputRef,
+  })
 
   return (
-    <HandleBlur task={task} selectedPriority={selectedPriority} title={title}>
+    <div
+      onBlur={handleOnBlur}
+      ref={containerRef}
+      tabIndex={0}
+      className="p-3 focus:ring focus:ring-red-600"
+    >
       <div>
         <Label htmlFor="title">Title</Label>
         <Input
+          onKeyDown={handleKeyDown}
           onChange={(e) => setTitle(e.target.value)}
           value={title}
           ref={inputRef}
@@ -73,7 +75,12 @@ export default function TaskForm({ task }: PropTypes) {
               <span>{selectedPriority.title}</span>
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="p-0 w-32" side="right" align="start">
+          <PopoverContent
+            className="p-0 w-32"
+            side="right"
+            align="start"
+            onCloseAutoFocus={() => closeForm()}
+          >
             <Command>
               <CommandList>
                 <CommandGroup>
@@ -93,6 +100,6 @@ export default function TaskForm({ task }: PropTypes) {
           </PopoverContent>
         </Popover>
       </div>
-    </HandleBlur>
+    </div>
   )
 }
